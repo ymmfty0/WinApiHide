@@ -130,6 +130,9 @@
   <ItemGroup>
     <ClCompile Include="IndirectSyscall.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <MASM Include="syscall.asm" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
