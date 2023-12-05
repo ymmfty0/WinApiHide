@@ -77,7 +77,6 @@ int main()
 {
 
 	PVOID exec_mem = nullptr;
-	BOOL rv;
 	HANDLE rt;
 
 	pNtAllocateVirtualMemory ntAllocateVirtualMemory =

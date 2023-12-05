@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectSyscall", "DirectSysc
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IndirectSyscall", "IndirectSyscall\IndirectSyscall.vcxproj", "{6D8614CA-9934-46FA-A9BF-AD6BD38DA383}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectSyscall2", "DirectSyscall2\DirectSyscall2.vcxproj", "{10118775-9B0A-4845-92CC-F0B1D32119F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +53,14 @@ Global
 		{6D8614CA-9934-46FA-A9BF-AD6BD38DA383}.Release|x64.Build.0 = Release|x64
 		{6D8614CA-9934-46FA-A9BF-AD6BD38DA383}.Release|x86.ActiveCfg = Release|Win32
 		{6D8614CA-9934-46FA-A9BF-AD6BD38DA383}.Release|x86.Build.0 = Release|Win32
+		{10118775-9B0A-4845-92CC-F0B1D32119F3}.Debug|x64.ActiveCfg = Debug|x64
+		{10118775-9B0A-4845-92CC-F0B1D32119F3}.Debug|x64.Build.0 = Debug|x64
+		{10118775-9B0A-4845-92CC-F0B1D32119F3}.Debug|x86.ActiveCfg = Debug|Win32
+		{10118775-9B0A-4845-92CC-F0B1D32119F3}.Debug|x86.Build.0 = Debug|Win32
+		{10118775-9B0A-4845-92CC-F0B1D32119F3}.Release|x64.ActiveCfg = Release|x64
+		{10118775-9B0A-4845-92CC-F0B1D32119F3}.Release|x64.Build.0 = Release|x64
+		{10118775-9B0A-4845-92CC-F0B1D32119F3}.Release|x86.ActiveCfg = Release|Win32
+		{10118775-9B0A-4845-92CC-F0B1D32119F3}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

